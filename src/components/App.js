@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import ProtectedRoute from "./ProtectedRoute"; 
 import api from '../utils/api';
+import * as auth from '../utils/auth';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Header from './Header';
+import Login from './Login';
+import Register from './Register';
+import InfoTooltip from './InfoTooltip';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
@@ -13,12 +19,20 @@ import ImagePopup from './ImagePopup';
 function App() {
 
   // state
+  const history = useHistory(); 
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [registered, setRegistered] = useState(true);
+  const [isInfoTooltipOpened, setIsInfoTooltipOpened] = useState(true);
+
   const [currentUser, setCurrentUser] = useState({});
+  const [email, setEmail] = useState('');
   const [cards, setCards] = useState([]);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  
 
   // user & cards setup
 
@@ -37,6 +51,25 @@ function App() {
         })
         .catch((err) => {console.log(err);});
   }, []);
+
+  // auth handlers
+
+  function handleRegister(data) {
+    auth.register(data.email, data.password)
+      .then((res) => {
+        setRegistered(true);
+        setIsInfoTooltipOpened(true);
+        history.push("/sign-in");
+      })
+      .catch((err) => {
+        if (err.status === 400) {
+          console.log("400 - некорректно заполнено одно из полей");
+        }
+        console.error(err);
+        setRegistered(false);
+        setIsInfoTooltipOpened(true);
+      });
+  };
 
   // profile handlers
 
@@ -105,6 +138,7 @@ function App() {
   // popup close handler
 
   function closeAllPopups() {
+    setIsInfoTooltipOpened(false);
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
@@ -117,17 +151,42 @@ function App() {
 
         <Header />
 
-        <Main 
-          cards={cards}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          onEditProfile={handleEditProfileClick} 
-          onAddPlace={handleAddPlaceClick} 
-          onEditAvatar={handleEditAvatarClick} 
-          onCardClick={handleCardClick}
-        />
+        <Switch>
 
+          <Route path="/sign-in">
+            <Login />
+          </Route>
+
+          <Route path="/sign-up">
+            <Register 
+              onRegister={handleRegister}
+            />
+          </Route>
+
+          <ProtectedRoute
+            path="/"
+            loggedIn={loggedIn}
+            component={Main}
+            cards={cards}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
+            onEditProfile={handleEditProfileClick} 
+            onAddPlace={handleAddPlaceClick} 
+            onEditAvatar={handleEditAvatarClick} 
+            onCardClick={handleCardClick}
+          />
+          <Route exact path="/">
+            {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+          </Route>
+
+        </Switch>
+        
         <Footer />
+
+        <InfoTooltip 
+          isOpen={isInfoTooltipOpened} 
+          onClose={closeAllPopups} 
+        />
 
         <EditProfilePopup 
           isOpen={isEditProfilePopupOpen} 
@@ -157,6 +216,7 @@ function App() {
         <ImagePopup 
           card={selectedCard} 
           onClose={closeAllPopups} 
+          isSuccess={registered}
         />
 
       </CurrentUserContext.Provider>

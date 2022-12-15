@@ -26,11 +26,16 @@
 @import url(./blocks/photo-grid/__pic-likes/photo-grid__pic-likes.css);
 @import url(./blocks/footer/footer.css);
 @import url(./blocks/footer/__copyright/footer__copyright.css);
+@import url(./blocks/auth/auth.css);
+@import url(./blocks/auth/__link/auth__link.css);
 @import url(./blocks/popup/popup.css);
 @import url(./blocks/popup/_opened/popup_opened.css);
+@import url(./blocks/popup/__image/popup__image.css);
+@import url(./blocks/popup/__title/popup__title.css);
 @import url(./blocks/popup/_type/_edit-profile/popup_type_edit-profile.css);
 @import url(./blocks/popup/_type/_view-photo/popup_type_view-photo.css);
 @import url(./blocks/popup/__container/popup__container.css);
+@import url(./blocks/popup/__container/_infotooltip/popup__container_infotooltip.css);
 @import url(./blocks/popup/__photo-container/popup__photo-container.css);
 @import url(./blocks/popup/__photo/popup__photo.css);
 @import url(./blocks/popup/__photo-pic/popup__photo-pic.css);
@@ -40,11 +45,15 @@
 @import url(./blocks/form/_type/_edit-profile/form_type_edit-profile.css);
 @import url(./blocks/form/__field/form__field.css);
 @import url(./blocks/form/__title/form__title.css);
+@import url(./blocks/form/__title/_theme/_dark/form__title_theme_dark.css);
 @import url(./blocks/form/__input-container/form__input-container.css);
+@import url(./blocks/form/__input-container/_theme/_dark/form__input-container_theme_dark.css);
 @import url(./blocks/form/__input/form__input.css);
+@import url(./blocks/form/__input/_theme/_dark/form__input_theme_dark.css);
 @import url(./blocks/form/__input/_type/form__input_type_error.css);
 @import url(./blocks/form/__error/form__error_visible.css);
 @import url(./blocks/form/__save-button/form__save-button.css);
+@import url(./blocks/form/__save-button/_theme/_dark/form__save-button_theme_dark.css);
 @import url(./blocks/form/__save-button/_disabled/form__save-button_disabled.css);
 
 
