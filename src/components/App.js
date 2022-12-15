@@ -199,6 +199,20 @@ function App() {
         />
 
         <Switch>
+          
+          
+          <Route path="/sign-in">
+            <Login 
+              onLogin={handleLogin}
+            />
+          </Route>
+
+          <Route path="/sign-up">
+            <Register 
+              onRegister={handleRegister}
+            />
+          </Route>
+
           <ProtectedRoute
             exact path="/"
             loggedIn={loggedIn}
@@ -214,18 +228,6 @@ function App() {
 
           <Route exact path="/">
             {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
-          </Route>
-          
-          <Route path="/sign-in">
-            <Login 
-              onLogin={handleLogin}
-            />
-          </Route>
-
-          <Route path="/sign-up">
-            <Register 
-              onRegister={handleRegister}
-            />
           </Route>
 
 
