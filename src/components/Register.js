@@ -32,7 +32,6 @@ function Register({ onRegister }) {
             onSubmit={handleSubmit}
             className="form form_type_register" 
             name="register-form" 
-            noValidate
             >
                 <h2 className="form__title form__title_theme_dark">
                     Регистрация
