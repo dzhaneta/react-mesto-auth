@@ -200,7 +200,6 @@ function App() {
 
         <Switch>
           
-          
           <Route path="/sign-in">
             <Login 
               onLogin={handleLogin}
@@ -226,7 +225,7 @@ function App() {
             onCardClick={handleCardClick}
           />
 
-          <Route exact path="/">
+          <Route  path="/">
             {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
           </Route>
 
